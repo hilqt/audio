@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>2027 月曆歌曲（12首）</title>
+  <style>
+    /* ===== 真正生效的 85% 縮放 ===== */
+    html {
+      font-size: 85%;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background-color: #ffffff;
+      margin: 0;
+      padding: 1rem;
+      font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", Arial, sans-serif;
+      -webkit-text-size-adjust: 100%;
+    }
+    .section-title {
+      color: #1a73e8;
+      font-size: 1.375rem;       /* 原 22px */
+      font-weight: bold;
+      margin: 0.6rem 0 1.5rem;
+      text-align: center;
+    }
+    .amp-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+      flex-wrap: wrap;
+    }
+    .amp-wrapper {
+      min-width: 17.5rem;
+      max-width: 26.25rem;
+      flex: 1 1 20rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .amp-title {
+      font-size: 1rem;           /* 原 16px */
+      font-weight: bold;
+      color: #1a73e8;
+      padding: 0.4rem 0.5rem 0.25rem;
+      text-align: center;
+      margin: 0;
+    }
+    .amp {
+      background-color: #f5f5f5;
+      padding: 0.75rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .amp-controls {
+      background-color: #000;
+      padding: 0.6rem 0.75rem;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .amp-controls button {
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      font-size: 1.125rem;       /* 原 18px */
+      cursor: pointer;
+      width: 2.375rem;
+      height: 2.375rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.1s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .amp-controls button:active { transform: scale(0.93); }
+    .play { background-color: #2e7d32; }
+    .pause { background-color: #f9a825; }
+    .stop { background-color: #c62828; }
+    .amp-controls label {
+      color: #fff;
+      font-size: 0.875rem;      /* 原 14px */
+      white-space: nowrap;
+    }
+    .volume {
+      flex: 1;
+      accent-color: #fff;
+      height: 0.375rem;
+    }
+    /* 歌詞容器 */
+    .lyrics-container {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      max-height: 80vh;
+      background: #fff9c4;
+      border-radius: 0.75rem;
+      padding: 1rem 1.125rem;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+      z-index: 20;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+    .lyrics-container::-webkit-scrollbar { width: 0; background: transparent; }
+    .lyrics-container { scrollbar-width: none; }
+    .lyrics-text {
+      font-size: 0.9375rem;     /* 原 15px */
+      line-height: 1.65;
+      color: #222;
+      white-space: pre-line;
+    }
+    @keyframes fadein {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes fadeoutShrink {
+      from { opacity: 1; transform: scale(1); }
+      to { opacity: 0; transform: scale(0.85); }
+    }
+    /* 手機適配 */
+    @media (max-width: 680px) {
+      .amp-row {
+        flex-direction: column;
+        gap: 1.25rem;
+      }
+      .amp-wrapper {
+        max-width: 100%;
+      }
+      .lyrics-container {
+        position: fixed;
+        left: 0.5rem !important;
+        right: 0.5rem !important;
+        top: 10%;
+        width: auto !important;
+        margin: 0 !important;
+        max-height: 75vh;
+      }
+    }
+    /* ===== 直式提示 ===== */
+    #rotate-hint {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #111;
+      color: #fff;
+      z-index: 9999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 1.4rem;
+      padding: 1.25rem;
+    }
+    #rotate-hint.show {
+      display: flex;
+    }
+    #rotate-hint .icon {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- 直式提示 -->
+  <div id="rotate-hint">
+    <div class="icon">📱↔️</div>
+    <div>請將手機轉為<strong>橫向</strong>觀看</div>
+    <div style="margin-top:0.75rem;font-size:0.95rem;opacity:0.8;">Please rotate your device to landscape</div>
+  </div>
+
+  <div class="section-title">2027 月曆歌曲（共12首）</div>
+
+  <!-- 第1排 -->
+  <div class="amp-row">
+    <div class="amp-wrapper">
+      <div class="amp-title">♪ 2027月曆歌曲1月份</div>
+      <div class="amp">
+        <audio class="audio-player" preload="metadata">
+          <source src="https://hilqt.github.io/audio/%E8%8F%8A_%E6%B9%9B%E6%B1%9F.mp3" type="audio/mpeg">
+        </audio>
+        <div class="amp-controls">
+          <button class="play">▶</button>
+          <button class="pause">Ⅱ</button>
+          <button class="stop">■</button>
+          <label>音量</label>
+          <input class="volume" type="range" min="0" max="1" step="0.05" value="0.8">
+        </div>
+      </div>
+      <div class="lyrics-data" style="display:none;">
+2027月曆歌曲1月份
+《 菊 》之一
+詞:梁風痕 曲:梁秋潭 演唱:凉风 编曲：湛卢
+温馨蝶梦冷悠悠
+气肅天高韵自幽
+寂寞东篱霜骨傲
+风痕月影淡於秋
+( 重唱 )
+《 湛江杂咏》之一
+诗： 梁风痕 曲： 秋 潭 演唱:凉风 编曲 ： 秋 潭
+横塘弥望碧田田
+逸艳芙蓉拟洛仙
+微步凌波近疑远
+悠然月下悟香禅
+                  ** * *** * **
+       湛江是我的出生地，特别有亲切感，所以首先便选了这首诗谱曲。事实上，此诗写得特别有意境，也有禅味，希望曲子能表达出诗中的意境。此诗成曲很快，编曲也相当顺利。
+      </div>
+    </div>
+    <div class="amp-wrapper">
+      <div class="amp-title">♪ 2027月曆歌曲2月份</div>
+      <div class="amp">
+        <audio class="audio-player" preload="metadata">
+          <source src="https://raw.githubusercontent.com/hilcm/CD-record/main/11 夜色濃 (3).mp3" type="audio/mpeg">
+        </audio>
+        <div class="amp-controls">
+          <button class="play">▶</button>
+          <button class="pause">Ⅱ</button>
+          <button class="stop">■</button>
+          <label>音量</label>
+          <input class="volume" type="range" min="0" max="1" step="0.05" value="0.8">
+        </div>
+      </div>
+      <div class="lyrics-data" style="display:none;">
+2027月曆歌曲2月份
+《 夜色濃 》女声独唱
+　
+词：梁秋潭 曲： 秋 潭 编曲 ：秋 潭
+粤韵歌曲
+夜色浓 难入梦
+静听寒虫诉隐衷
+声声叫得人寂寞
+似此良夜
+月朗天空*
+    
+月溶溶 花影动
+冷香微沁习习风
+怎得风儿解人意
+暗偷心事
+送过墙东
+*注： 月是那么清朗，天是那么空旷。
+    此词写于1968年。当时偶然写成，便不无得意地拿给父亲看。父亲不为意的看了一下，没表示甚么意见。我便只好讪讪而退。
+    父亲一直不鼓励我从文，所以我工余，晚上在红磡工专（理工大学前身）进修建筑。其实，我血液里确实有点理科的元素。其后亦花了很多时间与精力自学写计算机程序。对理科亦较有兴趣。
+    父亲有知的话，该感到安慰吧！
+      </div>
+    </div>
+  </div>
+
+  <!-- 第2排 -->
+  <div class="amp-row">
+    <div class="amp-wrapper">
+      <div class="amp-title">♪ 2027月曆歌曲3月份</div>
+      <div class="amp">
+        <audio class="audio-player" preload="metadata">
+          <source src="https://raw.githubusercontent.com/hilcm/CD-record/main/風入松.mp3" type="audio/mpeg">
+        </audio>
+        <div class="amp-controls">
+          <button class="play">▶</button>
+          <button class="pause">Ⅱ</button>
+          <button class="stop">■</button>
+          <label>音量</label>
+          <input class="volume" type="range" min="0" max="1" step="0.05" value="0.8">
+        </div>
+      </div>
+      <div class="lyrics-data" style="display:none;">
+2027月曆歌曲3月份
+《 风入松 》女声独唱
+   ----黄昏述怀
+词：梁秋潭 曲：秋 潭 编曲 ：秋 潭
+多年夙愿见初心
+失落到如今
+蹉跎岂关崎岖路
+也疲累
+几许艰辛
+尘俗网中岁月
+清歌声里黄昏
+人生到处本无痕
+风过莫追寻
+拼将心力扶贫苦
+不言退
+尽献余温
+苗裔茁壮郁郁
+神州兴盛欣欣
+    此词写於2022年。与《夜色浓》相隔55年。写《夜色浓》时是“为赋新词强说愁”的青少年；写《风入松》则鬓已星星矣!**
+    从来不知有《风入松》这词牌，也从未读过此词，是素云同学一力促成的。
+    其实，我读过的词真是屈指可数。此非谦逊，千真万确，并无虚言。
+    「尘俗网中岁月 轻歌声里黄昏」
+    真是我跟父亲一生的写照！
+      
+**注：
+    “鬓已星星“出自宋词人蒋捷《虞美人》，比喻白发如星点点。
+      </div>
+    </div>
+    <div class="amp-wrapper">
+      <div class="amp-title">♪ 2027月曆歌曲4月份</div>
+      <div class="amp">
+        <audio class="audio-player" preload="metadata">
+          <source src="https://hilqt.github.io/audio/淒美的浪漫777.mp3" type="audio/mpeg">
+        </audio>
+        <div class="amp-controls">
+          <button class="play">▶</button>
+          <button class="pause">Ⅱ</button>
+          <button class="stop">■</button>
+          <label>音量</label>
+          <input class="volume" type="range" min="0" max="1" step="0.05" value="0.8">
+        </div>
+      </div>
+      <div class="lyrics-data" style="display:none;">
+2027月曆歌曲4月份
+《 凄美的浪漫 》
+    -----纪念林徽因先生
+詞 曲: 秋 潭
+你是碧空中冷月 弯弯
+我是银河裡寒星 璨璨
+你我遙遙相望
+交会時互放的光芒
+卻无法照亮长空 漫漫
+啊 -----
+风在轻叹
+啊 -----
+云在离散
+留下的是一程 -----
+凄美的浪漫
+你是碧空中冷月 弯弯
+我是银河裡寒星 璨璨
+你我遙遙相望
+交会时互放的光芒
+卻无法照亮长空 漫漫
+啊 -----
+风在轻叹
+啊 -----
+云在离散
+留下的是一程 -----
+凄美的浪漫
+2022-10-17
+      </div>
+    </div>
+  </div>
+
+  <!-- 第3排 -->
+<div class="amp-row">
+  <div class="amp-wrapper">
+    <div class="amp-title">♪ 2027月曆歌曲5月份</div>
+    <div class="amp">
+      <audio class="audio-player" preload="metadata">
+        <source src="https://hilqt.github.io/audio/四季芳華77.mp3" type="audio/mpeg">
+      </audio>
+      <div class="amp-controls">
+        <button class="play">▶</button>
+        <button class="pause">Ⅱ</button>
+        <button class="stop">■</button>
+        <label>音量</label>
+        <input class="volume" type="range" min="0" max="1" step="0.05" value="0.8">
+      </div>
+    </div>
+
+    <!-- 把連結移到這裡（可見區域） -->
+    <div style="margin-top: 8px; text-align: center;">
+      <a class="lyrics-link" 
+         href="https://spring-breezes7.blogspot.com/?m=-1" 
+         target="_blank" 
+         style="color:red !important; font-weight:bold; text-decoration:underline;">
+        👉 点此进入更多《秋潭音乐创作》网页
+      </a>
+    </div>
+
+    <!-- 歌詞資料保持隱藏即可 -->
+    <div class="lyrics-data" style="display:none;">
+2027月曆歌曲5月份
+《 四季芳华 》
+     -----纪念魏菲比老师
+詞 曲: 秋 潭
+      
+春光再
+繁花添风采　　
+娇俏淡雅千百态
+众里寻她不知她何在
+幽幽白兰送香来
+夏天来
+高洁荷花开
+她是红颜　
+你衣素白
+晚风徐来
+飘曳多风采
+「问君摘我该不该」
+秋衣裁
+窗外菊花栽
+高洁秀气
+不惹尘埃
+人间沧桑
+不让清颜改
+西风明月入襟怀
+冬残快
+雪花铺天盖
+沁人清香苦寒来
+任它冰雪扑脸多难耐
+傲霜寒梅要把春风待
+後记：
+   老师，感激您对我的赏识与扶持。我虽是默默无闻之辈，但我的音乐是好的！也许，这就是我唯一能让您感到的一点安慰吧！
+    </div>
+  </div>
+
+    <div class="amp-wrapper">
+      <div class="amp-title">♪ 2027月曆歌曲6月份</div>
+      <div class="amp">
+        <audio class="audio-player" preload="metadata">
+          <source src="https://hilqt.github.io/audio/人生憾多_男.mp3" type="audio/mpeg">
+        </audio>
+        <div class="amp-controls">
+          <button class="play">▶</button>
+          <button class="pause">Ⅱ</button>
+          <button class="stop">■</button>
+          <label>音量</label>
+          <input class="volume" type="range" min="0" max="1" step="0.05" value="0.8">
+        </div>
+      </div>
+      <div class="lyrics-data" style="display:none;">
+2027月曆歌曲6月份
+《 人生憾多 》
+（ 原曲《一剪梅》）粤韵版 秋潭配詞
+犹忆 初邂逅妳在莲池
+骤见 就似风中一首诗
+是花仙子
+是出水莲
+清秀气质 倆悅心相知
+魂牵 轻笑欲语未言时
+梦你 共对细诉苦相思
+万千关爱
+百般叮咛
+刻骨铭心 眷念不休止
+人生憾多 盼求情与义
+有情欠缘爱不易
+人分路阻 信诚无变异
+岁月暗磨世间事
+馀生倦写 这平凡故事
+抱憾此生 这情字
+人生憾多 盼求情与义
+有情欠缘爱不易
+人分路阻 信诚无变异
+岁月暗磨世间事
+馀生倦写 这平凡故事
+抱憾此生 这情字
+*注：作曲者有陈彼得、陈信义、陈怡多说，未知是否同一人，今取陈彼得版本。
+      </div>
+    </div>
+  </div>
+
+  <!-- 第4排 -->
+  <div class="amp-row">
+    <div class="amp-wrapper">
+      <div class="amp-title">♪ 2027月曆歌曲7月份</div>
+      <div class="amp">
+        <audio class="audio-player" preload="metadata">
+          <source src="https://hilqt.github.io/audio/qnjrcmz%20(2).mp3" type="audio/mpeg">
+        </audio>
+        <div class="amp-controls">
+          <button class="play">▶</button>
+          <button class="pause">Ⅱ</button>
+          <button class="stop">■</button>
+          <label>音量</label>
+          <input class="volume" type="range" min="0" max="1" step="0.05" value="0.8">
+        </div>
+      </div>
+      <div class="lyrics-data" style="display:none;">
+2027月曆歌曲7月份
+《 桃花依旧 》
+   ------怀念故友黄负架君
+      
+ 诗：唐·崔护
+ 曲：秋潭 (2026年）
+      
+去年今日此门中
+人面桃花相映红
+人面不知何处去
+桃花依旧笑春风
+ （ 重唱 ）
+      
+後记：
+    与负架兄不算深交，但有一段难忘往事。
+    一天． 忽接到负架兄的WhatsApp。原来他从他夫人（协同小师妹）WhatsApp中，听到我创作的音乐，像发现甚麽珍贵东西似的，要求我把其他音乐作品都传给他欣赏。
+不久，他便反馈说：我的音乐，他觉很有价值。徵求我同意，把这些音乐，推荐给一位旅加的著名华裔粤剧女前辈听听。
+    结果，因为我的音乐风格与粤曲不合吧。所以，此事便不了了之。
+    后来，我们有过几次切磋机会。其中一次的话题，便是与崔护这首《题都城南庄》有关。
+    今借此机会，以这首小曲怀念故友，也感激他赏识之情；推介之义。
+    这首小曲，它是脱胎於早期写的小曲《风在说》，後来，我又把《风在说》的旋律用在管弦小曲作为主题。现在，一时心血来潮，灵感触动，把它另配上崔护的感人之作《题都城南庄》，另外编曲，竟然天衣无缝，音韵吻合。一段美丽的旋律，就这样配上一首美丽感人的诗篇。岂真是天意？！
+      </div>
+    </div>
+    <div class="amp-wrapper">
+      <div class="amp-title">♪ 2027月曆歌曲8月份</div>
+      <div class="amp">
+        <audio class="audio-player" preload="metadata">
+          <source src="https://hilqt.github.io/audio/nayigehuanghun_m.mp3" type="audio/mpeg">
+        </audio>
+        <div class="amp-controls">
+          <button class="play">▶</button>
+          <button class="pause">Ⅱ</button>
+          <button class="stop">■</button>
+          <label>音量</label>
+          <input class="volume" type="range" min="0" max="1" step="0.05" value="0.8">
+        </div>
+      </div>
+      <div class="lyrics-data" style="display:none;">
+2027月曆歌曲8月份
+《 那一个黄昏 》
+詞 曲: 秋 潭
+      
+  词 ： 秋 潭 曲 ： 秋 潭
+  「一马离了西凉界」
+  曲罢余韵情真切
+  寂寞黄昏夕阳斜
+  和风不解茫茫劫
+  多少独坐的晨昏日夜
+  多少失落的时令佳节
+  多少伤心的情泯望绝
+  多少无眠的星沉月缺
+  （重唱）
+  父亲,我怎不懂陪您多些!
+      </div>
+    </div>
+  </div>
+
+  <!-- 第5排 -->
+  <div class="amp-row">
+    <div class="amp-wrapper">
+      <div class="amp-title">♪ 2027月曆歌曲9月份</div>
+      <div class="amp">
+        <audio class="audio-player" preload="metadata">
+          <source src="https://hilqt.github.io/audio/7水調歌頭_中.mp3" type="audio/mpeg">
+        </audio>
+        <div class="amp-controls">
+          <button class="play">▶</button>
+          <button class="pause">Ⅱ</button>
+          <button class="stop">■</button>
+          <label>音量</label>
+          <input class="volume" type="range" min="0" max="1" step="0.05" value="0.8">
+        </div>
+      </div>
+      <div class="lyrics-data" style="display:none;">
+2027月曆歌曲9月份
+《 水调歌头 》
+詞:宋·苏 轼 曲: 秋 潭
+明月几时有
+把酒问青天
+不知天上宫阙
+今夕是何年
+(重唱）
+我欲乘风归去
+又恐琼楼玉宇
+高处不胜寒
+起舞弄清影
+何似在人间
+转朱阁
+低绮户
+照无眠
+不应有恨
+何事长向别时圆
+*人有悲欢离合
+月有阴晴圆缺
+此事古难全
+但愿人长久
+千里共婵娟
+(重唱*）
+      </div>
+    </div>
+    <div class="amp-wrapper">
+      <div class="amp-title">♪ 2027月曆歌曲10月份</div>
+      <div class="amp">
+        <audio class="audio-player" preload="metadata">
+          <source src="https://hilqt.github.io/audio/秋日清潭7.mp3" type="audio/mpeg">
+        </audio>
+        <div class="amp-controls">
+          <button class="play">▶</button>
+          <button class="pause">Ⅱ</button>
+          <button class="stop">■</button>
+          <label>音量</label>
+          <input class="volume" type="range" min="0" max="1" step="0.05" value="0.8">
+        </div>
+      </div>
+      <div class="lyrics-data" style="display:none;">
+2027月曆歌曲10月份
+《 秋日清潭 》女声吟唱
+曲：秋潭　
+    这虽是首无字之歌。但空灵的女声吟唱，绝对震撼人心！
+    秋潭这个笔名，是父亲为我取；《秋日清潭》这首乐曲是我为自己写。
+    「艰险我奋进，困乏我多情」；心向光明，生生不息！
+  
+      </div>
+    </div>
+  </div>
+
+  <!-- 第6排 -->
+  <div class="amp-row">
+    <div class="amp-wrapper">
+      <div class="amp-title">♪ 2027月曆歌曲11月份</div>
+      <div class="amp">
+        <audio class="audio-player" preload="metadata">
+          <source src="https://hilqt.github.io/audio/燭不語711.mp3" type="audio/mpeg">
+        </audio>
+        <div class="amp-controls">
+          <button class="play">▶</button>
+          <button class="pause">Ⅱ</button>
+          <button class="stop">■</button>
+          <label>音量</label>
+          <input class="volume" type="range" min="0" max="1" step="0.05" value="0.8">
+        </div>
+      </div>
+      <div class="lyrics-data" style="display:none;">
+2027月曆歌曲11月份
+《 燭不語 》
+  曲：王粵生 詞：秋潭
+芳華已不再
+人生幾變改
+舊日顯赫
+如今復何在
+翩翩江南燕
+别故鄉擋禍災
+戰火烽煙
+南往北來
+萬里奔波
+老少拼保無礙
+心內牽掛誰開解
+坐看昏燈難釋懷
+今朝不易過
+明晚炊難開
+賜婚金釵（*注）
+任典他尊嚴
+賣去唏噓
+往昔風光已拋塵埃
+半生坎坷
+國事家事
+最難兩兼愛
+只是那家分親離
+期盼又無奈
+有朝日出江山秀
+知未知繁花血淚栽
+燭淚點點
+訴盡世事最堪哀
+只剩得愛伶白任
+伴我孤燈傾聽
+帝女抱憾亡國恨與哀
+       母親雖然沒上過學，但是人極聰慧；父親是個書生，只入書房，不踏廚房。所以持家的擔子便落在母親身上。父母親一生辛勞，都沒怎樣享過兒孫福！
+       母親晚年喜看任劍輝、白雪仙（任白）等名伶的粵語長片，粵語小曲，如《帝女花》、《紅燭淚》、《荷花香》打發日子。我日間工作，黃昏後回家，便帶著母親到處飲食，走遍香江嚐美食；不時在家彈彈粵調小曲給母親聽，其實我不懂彈琴，但母親卻說好聽；
+       我也曾厚顏地答應做“佛跳牆”給母親吃。結果，燒鴨腿焦壞了，丟掉了。最後，終於把“佛跳牆”弄好，拿給母親吃。母親記性好，記得我是買了燒鴨腿的，便問燒鴨腿哪裡去了？我只好套用武俠小說的用語，戲對母親說：「煮熟的鴨子飛啦」，母親點點頭，微微笑說“佛跳牆”好吃，並分了一些給我。
+（ 注：家族是滿族黃旗，祖先由清帝賜婚，族人繁多，家道中落，多年下來，家產也所餘無幾。）
+      </div>
+    </div>
+    <div class="amp-wrapper">
+      <div class="amp-title">♪ 2027月曆歌曲12月份</div>
+      <div class="amp">
+        <audio class="audio-player" preload="metadata">
+          <source src="https://hilqt.github.io/audio/blhzg.mp3" type="audio/mpeg">
+        </audio>
+        <div class="amp-controls">
+          <button class="play">▶</button>
+          <button class="pause">Ⅱ</button>
+          <button class="stop">■</button>
+          <label>音量</label>
+          <input class="volume" type="range" min="0" max="1" step="0.05" value="0.8">
+        </div>
+      </div>
+      <div class="lyrics-data" style="display:none;">
+2027月曆歌曲12月份
+《 笨老汉之歌 》
+   词曲：秋潭 （2026,3）
+      
+我是一个穷光蛋
+没有牵挂没有烦
+我是一个笨老汉
+除了坏事啥都干
+每天每夜自个唱
+清歌一曲解心宽
+歌声翻过万重山
+祝愿天下人平安
+送走寒冬度患难
+鸟语花香春光还
+（ 重唱 ）
+      </div>
+    </div>
+  </div>
+
+<script>
+(function() {
+  'use strict';
+
+  /* ========== 橫屏鎖定 + 提示 ========== */
+  const rotateHint = document.getElementById('rotate-hint');
+
+  function isPortrait() {
+    return window.innerHeight > window.innerWidth;
+  }
+
+  function checkOrientation() {
+    if (!rotateHint) return;
+    if (isPortrait()) {
+      rotateHint.classList.add('show');
+    } else {
+      rotateHint.classList.remove('show');
+    }
+  }
+
+  function tryLockLandscape() {
+    if (screen.orientation && screen.orientation.lock) {
+      return screen.orientation.lock('landscape')
+        .then(function() {
+          if (rotateHint) rotateHint.classList.remove('show');
+          return true;
+        })
+        .catch(function() {
+          // 鎖定失敗（iOS / 權限不足等）
+          checkOrientation();
+          return false;
+        });
+    } else {
+      checkOrientation();
+      return Promise.resolve(false);
+    }
+  }
+
+  function unlockOrientation() {
+    if (screen.orientation && screen.orientation.unlock) {
+      try { screen.orientation.unlock(); } catch (e) {}
+    }
+  }
+
+  // 初始檢查
+  checkOrientation();
+
+  // 頁面載入後嘗試鎖定（多數瀏覽器會失敗）
+  tryLockLandscape();
+
+  // 第一次使用者互動時再嘗試鎖定（成功率較高）
+  function onFirstInteraction() {
+    document.removeEventListener('click', onFirstInteraction);
+    document.removeEventListener('touchstart', onFirstInteraction);
+    tryLockLandscape();
+  }
+  document.addEventListener('click', onFirstInteraction, { once: true });
+  document.addEventListener('touchstart', onFirstInteraction, { once: true });
+
+  // 方向改變時更新
+  window.addEventListener('orientationchange', function() {
+    setTimeout(checkOrientation, 300);
+  });
+  window.addEventListener('resize', checkOrientation);
+
+  if (screen.orientation) {
+    screen.orientation.addEventListener('change', checkOrientation);
+  }
+
+  // 離開頁面時解除鎖定
+  window.addEventListener('pagehide', unlockOrientation);
+  window.addEventListener('beforeunload', unlockOrientation);
+  document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'hidden') {
+      unlockOrientation();
+    }
+  });
+
+  /* ========== 播放器邏輯 ========== */
+  function initWrapper(wrapper) {
+    if (wrapper.dataset.ampInitialized === 'true') return;
+    wrapper.dataset.ampInitialized = 'true';
+
+    const player = wrapper.querySelector('.audio-player');
+    const playBtn = wrapper.querySelector('.play');
+    const pauseBtn = wrapper.querySelector('.pause');
+    const stopBtn = wrapper.querySelector('.stop');
+    const volumeSlider = wrapper.querySelector('.volume');
+    const lyricsData = wrapper.querySelector('.lyrics-data');
+    const lyricsText = lyricsData ? lyricsData.textContent.trim() : '';
+
+    if (!player || !playBtn) return;
+
+    if (volumeSlider) {
+      player.volume = parseFloat(volumeSlider.value);
+      volumeSlider.addEventListener('input', function() {
+        player.volume = parseFloat(this.value);
+      });
+    }
+
+    playBtn.addEventListener('click', function() {
+      const row = wrapper.closest('.amp-row');
+      if (row) {
+        row.querySelectorAll('.audio-player').forEach(function(p) {
+          if (p !== player) {
+            p.pause();
+            p.currentTime = 0;
+          }
+        });
+        row.querySelectorAll('.lyrics-container').forEach(function(el) {
+          el.remove();
+        });
+      }
+
+      const playPromise = player.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(function() {
+          console.log('播放被瀏覽器阻擋，請再點一次');
+        });
+      }
+
+      const lyricsDiv = document.createElement('div');
+      lyricsDiv.className = 'lyrics-container';
+      const content = document.createElement('div');
+      content.className = 'lyrics-text';
+      content.textContent = lyricsText;
+      lyricsDiv.appendChild(content);
+
+      const siblings = Array.from(wrapper.parentNode.querySelectorAll('.amp-wrapper'));
+      const index = siblings.indexOf(wrapper);
+
+      if (window.innerWidth > 680) {
+        if (index === 0) {
+          lyricsDiv.style.left = '100%';
+          lyricsDiv.style.marginLeft = '0.75rem';
+        } else {
+          lyricsDiv.style.right = '100%';
+          lyricsDiv.style.marginRight = '0.75rem';
+          lyricsDiv.style.left = 'auto';
+        }
+      }
+
+      wrapper.appendChild(lyricsDiv);
+      lyricsDiv.style.animation = 'fadein 0.6s ease-out forwards';
+
+      const endHandler = function() {
+        lyricsDiv.style.animation = 'fadeoutShrink 1.2s ease-out forwards';
+        setTimeout(function() {
+          if (lyricsDiv.parentNode) lyricsDiv.remove();
+        }, 1200);
+        player.removeEventListener('ended', endHandler);
+      };
+      player.addEventListener('ended', endHandler, { once: true });
+    });
+
+    if (pauseBtn) {
+      pauseBtn.addEventListener('click', function() {
+        player.pause();
+      });
+    }
+
+    if (stopBtn) {
+      stopBtn.addEventListener('click', function() {
+        player.pause();
+        player.currentTime = 0;
+        wrapper.querySelectorAll('.lyrics-container').forEach(function(el) {
+          el.remove();
+        });
+      });
+    }
+  }
+
+  document.querySelectorAll('.amp-wrapper').forEach(initWrapper);
+})();
+</script>
+</body>
+</html>
